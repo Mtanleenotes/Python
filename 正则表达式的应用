@@ -1,0 +1,65 @@
+#coding=utf-8
+
+#导入re库文件
+import re
+# from re import findall,search,S
+
+old_url = 'http://www.jikexueyuan.com/course/android/?pageNum=2'
+total_page = 20
+
+f = open('text.txt','r')
+html = f.read()
+f.close()
+
+#爬取标题
+title = re.search('<title>(.*?)</title>',html,re.S).group(1)
+print title
+结果：极客学院爬虫测试
+
+#提取链接
+links = re.findall('href="(.*?)"',html,re.S)
+for each in links:
+    print each
+结果：
+http://jikexueyuan.com/welcome.html
+http://jikexueyuan.com/1.html
+http://jikexueyuan.com/2.html
+http://jikexueyuan.com/3.html
+
+#提取部分文字，先大再小
+text_fied = re.findall('<ul>(.*?)</ul>',html,re.S)[0] #注意返回结果
+# print text_fied
+the_text = re.findall('">(.*?)</a>',text_fied,re.S)
+for every_text in the_text:
+    print every_text
+结果：
+这是第一条
+这是第二条
+这是第三条
+
+#sub实现翻页
+for i in range(2,total_page+1): #从2到20
+    new_link = re.sub('pageNum=\d+','pageNum=%d'%i,old_url,re.S)
+    print new_link
+结果：
+http://www.jikexueyuan.com/course/android/?pageNum=2
+……
+http://www.jikexueyuan.com/course/android/?pageNum=20
+
+text.txt文件
+<html>
+    <head>
+        <title>极客学院爬虫测试</title>
+    </head>
+    <body>
+        <div class="topic"><a href="http://jikexueyuan.com/welcome.html">欢迎参加《Python定向爬虫入门》</a></div>
+        <div class="list">
+            <ul>
+                <li><a href="http://jikexueyuan.com/1.html">这是第一条</a> </li>
+                <li><a href="http://jikexueyuan.com/2.html">这是第二条</a> </li>
+                <li><a href="http://jikexueyuan.com/3.html">这是第三条</a> </li>
+            </ul>
+        </div>
+    </body>
+</html>
+
