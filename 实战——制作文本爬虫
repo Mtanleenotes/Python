@@ -1,0 +1,29 @@
+实现原理：
+1.	保存网页源代码
+2.	Python读文件加载源代码
+3.	正则表达式提取图片网址
+4.	下载图片
+
+#coding=utf-8
+import re
+import requests
+
+#读取源码文件
+f = open('source2.txt','r')
+html = f.read()
+f.close()
+
+#匹配图片网址
+pic_url = re.findall('img src="(.*?)" class="lessonimg"',html,re.S)
+i = 0
+for each in pic_url:
+    print 'now dowloading:'+each
+    pic = requests.get(each)
+    fp = open('pic2\\'+str(i)+'.jpg','wb')
+    fp.write(pic.content)
+    fp.close()
+    i += 1
+结果：
+now dowloading:http://a1.jikexueyuan.com/home/201601/28/9d07/56a978d332389.jpg
+……
+now dowloading:http://a1.jikexueyuan.com/home/201602/03/bf79/56b108e9a4f01.jpg
