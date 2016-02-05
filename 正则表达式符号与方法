@@ -1,0 +1,92 @@
+常用符号：
+.：匹配除’\n’外任意字符
+*：匹配前一个字符0次或无限次
+？：匹配前一个字符0次或1次
+.*：贪心算法，提取最多内容
+.*?：非贪心算法
+()：括号内的数据作为结果返回
+
+常用方法：
+findall:匹配所有符合规律的内容，返回包含结果的列表
+search:匹配并提取第一个符合规律的内容，返回一个正则表达式对象
+sub:替换符合规律的内容，返回替换后的值
+
+#.的使用举例，匹配除“\n”外任何单个字符
+a = 'xy123'
+b = re.findall('x...',a)
+print b
+结果：['xy12']
+
+#*的使用举例，匹配前一个字符0次或无限次
+a = 'xyxy123'
+b = re.findall('y*',a)
+print b
+结果：['', 'y', '', 'y', '', '', '', '']
+
+#？的使用，匹配前一个字符0次或1次
+a = 'xy1xx23'
+b = re.findall('x?',a)
+print b
+结果：['x', '', '', 'x', 'x', '', '', '']
+
+#.*的使用举例,贪心算法，提取最多内容
+b = re.findall('xx.*xx',secret_code)
+print b
+#.*？的使用,非贪心算法
+c = re.findall('xx.*?xx',secret_code)
+print c
+结果：
+['xxlxxfasdjifja134xxlovexx23345sdfxxyouxx']
+['xxlxx', 'xxlovexx', 'xxyouxx']
+
+# 使用括号与不使用括号的区别，括号内的数据作为结果返回
+d = re.findall('xx(.*?)xx',secret_code)
+print d
+for each in d:
+    print each
+结果：
+['l', 'love', 'you']
+l
+love
+you
+
+s = '''sdfxxhello
+xxfsdfxxworldxxasdf'''
+d = re.findall('xx(.*?)xx',s,re.S)
+print d
+结果：['hello\n', 'world']
+
+#对比findall与search的区别
+s2 = 'asdfxxixx123xxlovexxdfg'
+f = re.search('xx(.*?)xx123xx(.*?)xx',s2).group()
+print f
+f = re.search('xx(.*?)xx123xx(.*?)xx',s2).group(1)
+print f
+f = re.search('xx(.*?)xx123xx(.*?)xx',s2).group(2)
+print f
+结果：
+xxixx123xxlovexx
+i
+love
+
+f2 = re.findall('xx(.*?)xx123xx(.*?)xx',s2)
+print f2[0][1]
+结果：love
+
+#sub的使用
+s = '123teqtewrt123'
+output = re.sub('123(.*?)123','123%d123'%889,s)
+print output
+结果：123889123
+
+常用技巧：
+import re
+from re import*
+from re import findall,search,sub,S
+不需要compile
+使用\d+匹配纯数字
+#匹配数字
+a = 'asdfasf1234567fasd555fas'
+b = re.findall('(\d+)',a)
+print b
+结果：['1234567', '555']
