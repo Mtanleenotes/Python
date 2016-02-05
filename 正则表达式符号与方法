@@ -59,7 +59,7 @@ print d
 
 #对比findall与search的区别
 s2 = 'asdfxxixx123xxlovexxdfg'
-f = re.search('xx(.*?)xx123xx(.*?)xx',s2).group()
+f = re.search('xx(.*?)xx123xx(.*?)xx',s2).group()    #返回整体
 print f
 f = re.search('xx(.*?)xx123xx(.*?)xx',s2).group(1)
 print f
