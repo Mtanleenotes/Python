@@ -70,9 +70,14 @@ xxixx123xxlovexx
 i
 love
 
-f2 = re.findall('xx(.*?)xx123xx(.*?)xx',s2)
-print f2[0][1]
-结果：love
+#findall返回的结果是一个列表
+s2 = 'asdfxxixx123xxlovexxyouxxasdfxxyouxx123xxlikexxmexx'
+f2 = re.findall('xx(.*?)xx123xx(.*?)xx(.*?)xx',s2)
+print f2
+print f2[1][1]
+结果：
+[('i', 'love', 'you'), ('you', 'like', 'me')]
+like
 
 #sub的使用
 s = '123teqtewrt123'
