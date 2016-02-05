@@ -50,6 +50,7 @@ l
 love
 you
 
+#re.S使.匹配包括换行在内的所有字符
 s = '''sdfxxhello
 xxfsdfxxworldxxasdf'''
 d = re.findall('xx(.*?)xx',s,re.S)
